@@ -2,6 +2,7 @@
 using DatabaseTutorials.DTO;
 using DatabaseTutorials.Entities;
 using DatabaseTutorials.Repository;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTutorials.Repositories
@@ -9,32 +10,32 @@ namespace DatabaseTutorials.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public StudentRepository(AppDbContext context)
+        public StudentRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public List<StudentResponseDTO> GetStudents()
         {
-            return _context.Students
-                .Include(s => s.Department)
-                .Select(s => new StudentResponseDTO
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    DepartmentName = s.Department != null
-                                     ? s.Department.Name
-                                     : null
-                })
-                .ToList();
+            var student = _context.Students
+                .Include(s=>s.Department).ToList();
+
+            return _mapper.Map<List<StudentResponseDTO>>(student);
         }
 
         public void AddStudent(Student student)
         {
             _context.Students.Add(student);
-
             _context.SaveChanges();
         }
+
+        public Student? GetStudentByUsername(string username)
+        {
+            return _context.Students.FirstOrDefault(s => s.Username == username);
+        }
     }
+
 }

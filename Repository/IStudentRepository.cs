@@ -6,7 +6,7 @@ namespace DatabaseTutorials.Repository
     public interface IStudentRepository
     {
         List<StudentResponseDTO> GetStudents();
-
         void AddStudent(Student student);
+        Student? GetStudentByUsername(string username);
     }
 }

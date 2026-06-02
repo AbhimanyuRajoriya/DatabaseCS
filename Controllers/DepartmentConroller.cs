@@ -1,11 +1,13 @@
 ﻿using DatabaseTutorials.DTO;
 using DatabaseTutorials.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatabaseTutorials.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _service;
@@ -16,12 +18,14 @@ namespace DatabaseTutorials.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetDepartments()
         {
             return Ok(_service.GetDepartments());
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddDepartment(DepartmentDTO dto)
         {
             _service.AddDepartment(dto);

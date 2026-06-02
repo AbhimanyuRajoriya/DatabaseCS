@@ -5,7 +5,7 @@
 namespace DatabaseTutorials.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,9 @@ namespace DatabaseTutorials.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Student"),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -47,6 +50,12 @@ namespace DatabaseTutorials.Migrations
                 name: "IX_Students_DepartmentId",
                 table: "Students",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_Username",
+                table: "Students",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />

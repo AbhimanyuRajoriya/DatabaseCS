@@ -1,4 +1,5 @@
-﻿using DatabaseTutorials.DTO;
+﻿using AutoMapper;
+using DatabaseTutorials.DTO;
 using DatabaseTutorials.Entities;
 using DatabaseTutorials.Repository;
 namespace DatabaseTutorials.Service
@@ -6,10 +7,12 @@ namespace DatabaseTutorials.Service
     public class DepartmentService: IDepartmentService
     {
         private readonly IDepartmentRepository _repository;
+        private readonly IMapper _mapper;
 
-        public DepartmentService(IDepartmentRepository repository)
+        public DepartmentService(IDepartmentRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public List<DepartmentResponseDTO> GetDepartments()
@@ -18,10 +21,7 @@ namespace DatabaseTutorials.Service
         }
         public void AddDepartment(DepartmentDTO dto)
         {
-            Department department = new Department()
-            {
-                Name = dto.Name
-            };
+            var department = _mapper.Map<Department>(dto);
             _repository.AddDepartment(department);
         }
     }
