@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Data.SqlClient;
+using System.Text.Json;
 
 namespace DatabaseTutorials.Middleware
 {
@@ -26,7 +27,20 @@ namespace DatabaseTutorials.Middleware
                         Message = ex.Message
                     }));
             }
-            catch(Exception ex)
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                context.Response.StatusCode = 503;
+                context.Response.ContentType = "application/json";
+
+                await context.Response.WriteAsync(
+                    JsonSerializer.Serialize(new
+                    {
+                        Message = "Database service is currently unavailable"
+                    }));
+            }
+            catch (Exception ex)
             {
                 context.Response.StatusCode = 500;
                 context.Response.ContentType = "application/json";
