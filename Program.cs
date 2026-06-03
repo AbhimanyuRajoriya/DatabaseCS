@@ -1,11 +1,3 @@
-using DatabaseTutorials.Data;
-using DatabaseTutorials.Entities;
-using DatabaseTutorials.Mapper;
-using DatabaseTutorials.Repositories;
-using DatabaseTutorials.Repository;
-using DatabaseTutorials.Security;
-using DatabaseTutorials.Service;
-using DatabaseTutorials.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +5,16 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using DatabaseTutorials.Modules.Students.Entity;
+using DatabaseTutorials.Modules.Students.Mapping;
+using DatabaseTutorials.Modules.Students.Services.Repositories;
+using DatabaseTutorials.Modules.Students.Services;
+using DatabaseTutorials.Modules.Departments.Repository;
+using DatabaseTutorials.Modules.Departments.Service;
+using DatabaseTutorials.Modules.Authentication.Secrurity;
+using DatabaseTutorials.Modules.Authentication.Service;
+using DatabaseTutorials.Modules.Shared.Data;
+using DatabaseTutorials.Modules.Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
