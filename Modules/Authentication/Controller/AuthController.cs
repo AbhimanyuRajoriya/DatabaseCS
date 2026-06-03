@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DatabaseTutorials.Modules.Authentication.DTOs;
 using DatabaseTutorials.Modules.Authentication.Service;
-using DatabaseTutorials.Modules.Authentication.DTOs;
+using Microsoft.AspNetCore.Mvc;
 namespace DatabaseTutorials.Modules.Authentication.Controller
 {
     public class AuthController : ControllerBase
@@ -13,12 +13,12 @@ namespace DatabaseTutorials.Modules.Authentication.Controller
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterDTO dto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var token = _authService.Register(dto);
-            if(!token)
+            if (!token)
             {
                 return BadRequest("User Already exists");
             }
