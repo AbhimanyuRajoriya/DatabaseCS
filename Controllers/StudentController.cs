@@ -23,14 +23,5 @@ namespace DatabaseTutorials.Controllers
         {
             return Ok(_service.GetStudents());
         }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public IActionResult AddStudent(StudentDTO dto)
-        {
-            _service.AddStudent(dto);
-
-            return Ok("Student Added");
-        }
     }
 }

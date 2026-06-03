@@ -16,20 +16,27 @@ namespace DatabaseTutorials.Service
         private readonly IPasswordHasherService _passwordHasher;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly IDepartmentRepository _departmentRepository;
 
-        public AuthService(IStudentRepository studentRepository, IPasswordHasherService passwordHasher, IConfiguration configuration, IMapper mapper)
+        public AuthService(IStudentRepository studentRepository, IPasswordHasherService passwordHasher, IConfiguration configuration, IMapper mapper, IDepartmentRepository departmentRepository)
         {
             _studentRepository = studentRepository;
             _passwordHasher = passwordHasher;
             _configuration = configuration;
             _mapper = mapper;
+            _departmentRepository = departmentRepository;
         }
 
         public bool Register(RegisterDTO dto)
         {
+            
             if (_studentRepository.GetStudentByUsername(dto.UserName) != null)
             {
                 return false;
+            }
+            if (!_departmentRepository.DepartmentExists(dto.DepartmentId))
+            {
+                throw new ArgumentException("Department Does Not Exist");
             }
 
             var student = _mapper.Map<Student>(dto);

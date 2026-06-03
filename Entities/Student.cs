@@ -6,7 +6,7 @@
         public string? Name { get; set; }
         public string Username { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
-        public string Role { get; set; } = "Student";
+        public string Role { get; set; } = "User";
         public int DepartmentId { get; set; }
         public Department? Department { get; set; }
     }

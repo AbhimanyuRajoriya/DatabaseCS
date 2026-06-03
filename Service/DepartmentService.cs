@@ -22,6 +22,10 @@ namespace DatabaseTutorials.Service
         public void AddDepartment(DepartmentDTO dto)
         {
             var department = _mapper.Map<Department>(dto);
+            if (_repository.DepartmentExistsByName(department.Name))
+            {
+                throw new ArgumentException("Department Aready Exists");
+            }
             _repository.AddDepartment(department);
         }
     }

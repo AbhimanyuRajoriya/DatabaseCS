@@ -3,6 +3,7 @@ using DatabaseTutorials.DTO;
 using AutoMapper;
 using DatabaseTutorials.Entities;
 using DatabaseTutorials.Repository;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace DatabaseTutorials.Repositories
 {
@@ -28,6 +29,17 @@ namespace DatabaseTutorials.Repositories
             _context.Departments.Add(department);
 
             _context.SaveChanges();
+        }
+
+        public bool DepartmentExists(int departmentId)
+        {
+            return _context.Departments.Any(d => d.DepartmentId == departmentId);
+        }
+        public bool DepartmentExistsByName(string name)
+        {
+            name = name.Trim().ToLower();
+            return _context.Departments
+                .Any(d => d.Name.Trim().ToLower() == name);
         }
     }
 }

@@ -8,5 +8,7 @@ namespace DatabaseTutorials.Repository
         List<DepartmentResponseDTO> GetDepartments();
 
         void AddDepartment(Department department);
+        bool DepartmentExists(int DepartmentId);
+        bool DepartmentExistsByName(string name);
     }
 }
